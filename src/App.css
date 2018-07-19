@@ -37,3 +37,8 @@
 .borderr {
   border: 1px solid red;
 }
+
+.img {
+    position: relative;    
+    z-index: -1;
+}
