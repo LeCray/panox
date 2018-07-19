@@ -26,3 +26,14 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+.landing {
+    background-image: url("Resources/landing.png");
+    background-repeat: no-repeat;
+    background-size:100% auto;
+    
+}
+
+.borderr {
+  border: 1px solid red;
+}

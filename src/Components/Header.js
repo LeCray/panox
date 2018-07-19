@@ -36,7 +36,7 @@ export default class Header extends React.Component {
         return (
             <div>
                 <link href="https://fonts.googleapis.com/css?family=Quicksand:700" rel="stylesheet"/>
-                <Navbar transparent fixed="top" color="transparent" dark expand="md" scrolling style={{paddingLeft: 50, fontFamily: "Quicksand", backgroundColor: true? "#2bbbad": "transparent"}}>
+                <Navbar transparent fixed="top" color="transparent" dark expand="md" scrolling style={{paddingLeft: 50, fontFamily: "Quicksand", backgroundColor: "#ea804a"}}>
                     <NavbarBrand>
                         <Link to="/" style={{color: "#fff"}}>PANOX</Link>                                                 
                     </NavbarBrand>
@@ -45,23 +45,16 @@ export default class Header extends React.Component {
                     <Collapse isOpen = { this.state.collapse } navbar>
                         <NavbarNav right>   
                           <NavItem>
-                              <NavLink to="/Parking" onClick={this.onClick} style={{fontStyle:"bold"}}>Have parking?</NavLink>
-                          </NavItem>                                               
-                          <NavItem>
-                              <NavLink to="/Sign_Up" onClick={this.onClick} style={{fontStyle:"bold"}}>Sign up</NavLink>
-                          </NavItem>
+                              <NavLink to="/Contact_Us" onClick={this.onClick} style={{fontStyle:"bold"}}>Contact us</NavLink>
+                          </NavItem>                                                                     
                           <NavItem>
                               <NavLink to="/About_Us" onClick={this.onClick}>About us</NavLink>
                           </NavItem>
                           <NavItem>
                               <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
                               <DropdownToggle nav caret>Menu</DropdownToggle>
-                              <DropdownMenu>
-                                  <DropdownItem><Link to="/Contact_Us" onClick={this.onClick}><b>Contact us</b></Link></DropdownItem>
-                                  <DropdownItem><Link to="/Careers" onClick={this.onClick}>Careers</Link></DropdownItem>
-                                  <DropdownItem><Link to="/Support" onClick={this.onClick}>Support</Link></DropdownItem>
-                                  <DropdownItem><Link to="/Terms_Conditions" onClick={this.onClick}>Terms and Conditions</Link></DropdownItem>
-                                  <DropdownItem><Link to="/Privacy_Policy" onClick={this.onClick}>Privacy Policy</Link></DropdownItem>
+                              <DropdownMenu>                                  
+                                  <DropdownItem><Link to="/Careers" onClick={this.onClick}>Careers</Link></DropdownItem>                                  
                                   <DropdownItem><Link to="/FAQ" onClick={this.onClick}>FAQ</Link></DropdownItem>
                               </DropdownMenu>
                               </Dropdown>

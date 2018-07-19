@@ -36,11 +36,20 @@ export default class Landing extends Component {
 		return(
             <div>              
                 <link href="https://fonts.googleapis.com/css?family=Quicksand:500" rel="stylesheet"/>			
-                <div class="container" style={{overflow: "hidden", fontFamily: "Quicksand", paddingTop: 100}}> 
-       
-                <h1>Welcome</h1>
+                <div style={{overflow: "hidden", fontFamily: "Quicksand", paddingTop: 50}}> 
+                    <div class="landing" style={{height: "100vh"}}>                               
+                        <div style={{marginTop: "17%", marginLeft: "20%"}}>
+                            <h2 style={{color: "#ea804a"}}>PANOX ELECTRONICS</h2>
+                            <h5>Take your studies further</h5>
+                        </div>
+                    </div>
+
+                    <div class="container" style={{height: 500}}>
+                    </div>
                         
             </div>
+                    }
+                    }
         </div>
 		)
 	}
