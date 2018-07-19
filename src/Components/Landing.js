@@ -76,8 +76,8 @@ export default class Landing extends Component {
                             <div  class="col-lg-4" style={{textAlign: "center"}}>                                
                                 <img 
                                     onMouseEnter={this.toggleHpDetail} 
-                                    onMouseLeave={this.toggleHpDetail} 
-                                    style={{height: 150}} 
+                                    onMouseLeave={this.toggleHpDetail}                                     
+                                    style={{height: 150, cursor: "pointer"}} 
                                     src={require("../Resources/hp.png")} /> 
                                 {
                                   this.state.showHpDetail &&
@@ -87,11 +87,20 @@ export default class Landing extends Component {
                                                 padding: 20, 
                                                 borderRadius: 3, 
                                                 color: "#fff"}}>
-                                    <h6 style={{display: "inline-block"}}>
-                                        Premium design<br/> 
-                                        Power and performance<br/> 
-                                        High Specifications
-                                    </h6>
+                                    <div style={{display: "inline-block"}}>
+                                        <h6>
+                                            Premium design<br/> 
+                                            Power and performance<br/> 
+                                            High Specifications
+                                        </h6>
+                                        <hr style={{borderColor: "#fff"}}/>
+                                        <p style={{fontSize: 15, marginTop: -10}}>What we got</p>
+                                        <ul style={{fontSize: 12, marginTop: -10}}>
+                                            <li>HP Pavilion 15 i5</li>
+                                            <li>HP Celeron Notebook i7</li>
+                                            <li>HP Elite Book 820 G4</li>
+                                        </ul>
+                                    </div>
                                     <img class="align-top pull-right" style={{height: 100, marginLeft: 30}} src={require("../Resources/hp_emotion.png")} />
                                   </div>
                                 }
@@ -101,36 +110,54 @@ export default class Landing extends Component {
                                 <img 
                                     onMouseEnter={this.toggleAppleDetail} 
                                     onMouseLeave={this.toggleAppleDetail}
-                                    style={{height: 150}} 
+                                    style={{height: 150, cursor: "pointer"}} 
                                     src={require("../Resources/apple.png")} />                                  
                                 {
                                   this.state.showAppleDetail &&
                                   <div style={{textAlign: "left", backgroundColor: "#ea804a", height: 200, padding: 20, borderRadius: 3, color: "#fff"}}>
-                                    <h6 style={{display: "inline-block"}}>
-                                        Premium design<br/>
-                                        Power and performance<br/>
-                                        High Specifications.
-                                    </h6>
-                                    <img class="align-top pull-right" style={{height: 100, marginLeft: 20}} src={require("../Resources/apple_emotion.png")} />
-                                  </div>
+                                        <div style={{display: "inline-block"}}>
+                                            <h6>
+                                                Premium design<br/> 
+                                                Power and performance<br/> 
+                                                High Specifications
+                                            </h6>
+                                            <hr style={{borderColor: "#fff"}}/>
+                                            <p style={{fontSize: 15, marginTop: -10}}>What we got</p>
+                                            <ul style={{fontSize: 12, marginTop: -10}}>
+                                                <li>Apple MacBook Pro</li>
+                                                <li>Apple MacBook Air 11.6"</li>
+                                                <li>Apple MacBook Air 12"</li>
+                                            </ul>
+                                        </div>
+                                        <img class="align-top pull-right" style={{height: 100, marginLeft: 20}} src={require("../Resources/apple_emotion.png")} />
+                                    </div>
                                 }
                             </div>
                             <div class="col-lg-4" style={{textAlign: "center"}}>
                                 <img 
                                     onMouseEnter={this.toggleAcerDetail} 
                                     onMouseLeave={this.toggleAcerDetail}
-                                    style={{height: 150}} 
+                                    style={{height: 150, cursor: "pointer"}} 
                                     src={require("../Resources/acer.png")} />                                     
                                 {
                                   this.state.showAcerDetail &&
-                                  <div style={{textAlign: "left", backgroundColor: "#ea804a", height: 200, padding: 20, borderRadius: 3, color: "#fff"}}>                                    
-                                        <h6 style={{display: "inline-block"}}>
-                                            Premium design<br/>
-                                            Power and performance<br/>
-                                            High Specifications.
-                                        </h6>                                    
+                                    <div style={{textAlign: "left", backgroundColor: "#ea804a", height: 200, padding: 20, borderRadius: 3, color: "#fff"}}>                                    
+                                        <div style={{display: "inline-block"}}>
+                                            <h6>
+                                                Premium design<br/> 
+                                                Power and performance<br/> 
+                                                High Specifications
+                                            </h6>
+                                            <hr style={{borderColor: "#fff"}}/>
+                                            <p style={{fontSize: 15, marginTop: -10}}>What we got</p>
+                                            <ul style={{fontSize: 12, marginTop: -10}}>
+                                                <li>Acer Aspire S5</li>
+                                                <li>Swift 7</li>
+                                                <li>Nitro 5 Spin</li>
+                                            </ul>
+                                        </div>                                   
                                         <img class="align-top pull-right" style={{height: 100, marginLeft: 20}} src={require("../Resources/acer_emotion.png")} />
-                                  </div>
+                                     </div>
                                 }
                             </div>
 
