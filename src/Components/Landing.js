@@ -83,15 +83,13 @@ export default class Landing extends Component {
                                   this.state.showHpDetail &&
                                   <div style={{textAlign: "left", 
                                                 backgroundColor: "#ea804a", 
-                                                height: 200, 
+                                                height: 220, 
                                                 padding: 20, 
                                                 borderRadius: 3, 
                                                 color: "#fff"}}>
                                     <div style={{display: "inline-block"}}>
-                                        <h6>
-                                            Premium design<br/> 
-                                            Power and performance<br/> 
-                                            High Specifications
+                                        <h6 style={{width: 185}}>
+                                            Hewlett-Packard's history spans more than seven decades of innovation
                                         </h6>
                                         <hr style={{borderColor: "#fff"}}/>
                                         <p style={{fontSize: 15, marginTop: -10}}>What we got</p>
@@ -114,12 +112,12 @@ export default class Landing extends Component {
                                     src={require("../Resources/apple.png")} />                                  
                                 {
                                   this.state.showAppleDetail &&
-                                  <div style={{textAlign: "left", backgroundColor: "#ea804a", height: 200, padding: 20, borderRadius: 3, color: "#fff"}}>
+                                  <div style={{textAlign: "left", backgroundColor: "#ea804a", height: 270, padding: 20, borderRadius: 3, color: "#fff"}}>
                                         <div style={{display: "inline-block"}}>
-                                            <h6>
-                                                Premium design<br/> 
-                                                Power and performance<br/> 
-                                                High Specifications
+                                            <h6 style={{width: 185}}>
+                                                Like the founding of the early chip companies and the 
+                                                invention of the microprocessor, 
+                                                the story of Apple is a key part of Silicon Valley folklore
                                             </h6>
                                             <hr style={{borderColor: "#fff"}}/>
                                             <p style={{fontSize: 15, marginTop: -10}}>What we got</p>
@@ -141,12 +139,11 @@ export default class Landing extends Component {
                                     src={require("../Resources/acer.png")} />                                     
                                 {
                                   this.state.showAcerDetail &&
-                                    <div style={{textAlign: "left", backgroundColor: "#ea804a", height: 200, padding: 20, borderRadius: 3, color: "#fff"}}>                                    
+                                    <div style={{textAlign: "left", backgroundColor: "#ea804a", height: 250, padding: 20, borderRadius: 3, color: "#fff"}}>                                    
                                         <div style={{display: "inline-block"}}>
-                                            <h6>
-                                                Premium design<br/> 
-                                                Power and performance<br/> 
-                                                High Specifications
+                                            <h6 style={{width: 190}}>
+                                                Acer is a Taiwanese company founded in 1976 under 
+                                                the name Multitech, and then changed its name to Acer in 1987
                                             </h6>
                                             <hr style={{borderColor: "#fff"}}/>
                                             <p style={{fontSize: 15, marginTop: -10}}>What we got</p>
