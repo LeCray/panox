@@ -39,9 +39,13 @@ export default class SavingsAccount extends Component {
             accounts: [],
             withdrawModal: false,
             withdrawID: 1,
+            maxWithdrawal: 0,
+            withdrawAmount:"",
+            withdrawLimit: false
         };
         this.toggle = this.toggle.bind(this);
-        //this.withdrawID = this.withdrawID.bind(this);
+        this.handleWithdraw = this.handleWithdraw.bind(this);
+        this.processWithdraw = this.processWithdraw.bind(this);
         
     }
 
@@ -69,8 +73,28 @@ export default class SavingsAccount extends Component {
     async withdraw(id){
         await this.setState({withdrawID: id})
         this.setState({withdrawModal: true})
-        
+        console.log("Row ID is: ", id)
+        const maxWithdrawal = this.state.accounts[id-1].balance - 1000
+        this.setState({maxWithdrawal: maxWithdrawal})    
     }
+    handleWithdraw(e) {
+        this.setState({ withdrawAmount: e.target.value});                
+    }
+    processWithdraw() {
+        const withdrawAmount = this.state.withdrawAmount
+        const accounts = this.state.accounts
+        const id = this.state.withdrawID - 1 
+
+        if (accounts[id].balance - withdrawAmount < 1000) {
+            this.setState({withdrawLimit: true})
+        } else {
+            accounts[id].balance = accounts[id].balance - withdrawAmount            
+            this.setState({withdrawModal: !this.state.withdrawModal})
+            this.state.withdrawLimit?this.setState({withdrawLimit: false}):null
+        }
+
+    }
+
     deposit(id){
         
         console.log({id})
@@ -78,6 +102,7 @@ export default class SavingsAccount extends Component {
 
     toggle(){
         this.setState({withdrawModal: !this.state.withdrawModal});
+        this.state.withdrawLimit?this.setState({withdrawLimit: false}):null
     }
 
 	render() {		
@@ -86,7 +111,7 @@ export default class SavingsAccount extends Component {
         const savingsTable = this.state.accounts.map((row) =>
             <tr >                 
                 <td key={row.id}>{row.id}</td>
-                <td key={row.balance}>{row.balance}</td>
+                <td key={row.balance}>R {row.balance}</td>
                 <td key={row.id}>
                     <p className="action withdraw" onClick={() => this.withdraw(row.id)}>Withdraw</p> | 
                     <p className="action deposit" onClick={() => this.deposit(row.id)}>Deposit</p>
@@ -111,25 +136,59 @@ export default class SavingsAccount extends Component {
                     </Table>
                     
 
-                    <Modal isOpen={this.state.withdrawModal} toggle={this.toggle} size="lg">
-                        <ModalHeader toggle={this.toggle}>Withdraw</ModalHeader>
+                    <Modal isOpen={this.state.withdrawModal} toggle={this.toggle} size="lg" style={{paddingLeft: 50, paddingRight: 50}}>
+                        <ModalHeader toggle={this.toggle}>
+                            Withdraw<br/>
+                            <p style={{fontSize: 15, marginBottom: -5}}>
+                                You need to have a min of R1000 in this account<br/>
+                                Savings Account ID: {this.state.withdrawID}
+                            </p>
+                        </ModalHeader>
                         <ModalBody className="modal-body">
 
                             <Row>
-                                <Col className="balance-container" lg={6}>
-                                    <h5 className="balance-details">Current Balance:</h5>
-                                    <h5 className="balance-details">Max Withdrawal: </h5>
+                                <Col className="balance-container" lg={4}>
+                                    <h6 className="balance-details">Current Balance:</h6>
+                                    <h6 className="balance-details">Max Withdrawal: </h6>
                                 </Col>
                                 <Col className="balance-container-2" lg={6}>
-                                    <h5 className="balance-details-2">{this.state.accounts[this.state.withdrawID - 1].balance}</h5>
-                                    <h5 className="balance-details-2">081 741 2792</h5>
+                                    <h6 className="balance-details-2">R {this.state.accounts[this.state.withdrawID - 1].balance}</h6>
+                                    <h6 className="balance-details-2">R {this.state.maxWithdrawal}</h6>
                                 </Col>
                             </Row>
+                            <Row>
+                                <Col lg={4}>
+                                    <p>Amount to withdraw R:</p>
+                                </Col>
+                                <Col lg={4}>
+                                    <Form>
+                                        <FormGroup>
+                                            <FormControl
+                                                autocomplete="off"
+                                                class="input-style"
+                                                type="number"
+                                                name="withdrawAmount"                                        
+                                                placeholder='Enter amount'
+                                                onChange={this.handleWithdraw}                                            
+                                            />                                
+                                        </FormGroup>                                
+                                    </Form>
+                                </Col>
+                            </Row>
+                            {this.state.withdrawLimit?
+                                <Row>
+                                    <Col lg={4}>                                    
+                                    </Col>
+                                    <Col lg={4}>
+                                        <p style={{color: "red"}}>Insufficient Funds</p>
+                                    </Col>
+                                </Row>
+                            :null}
 
                         </ModalBody>
                         <ModalFooter>
-                            <Button color="secondary" onClick={this.toggle}>Close</Button>{' '}
-                            <Button color="primary">Save changes</Button>
+                            <Button bsStyle="info" onClick={this.toggle}>Cancel</Button>
+                            <Button bsStyle="danger" onClick={this.processWithdraw}>Process Withdraw</Button>
                         </ModalFooter>
                     </Modal>
             </div>
