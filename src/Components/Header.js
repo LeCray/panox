@@ -14,7 +14,8 @@ export default class Header extends React.Component {
         this.state = {
             collapse: false,
             isWideEnough: false,
-            dropdownOpen: false,            
+            dropdownOpen: false, 
+            home: true           
         };
     this.onClick = this.onClick.bind(this);    
     this.toggle = this.toggle.bind(this);
@@ -35,27 +36,27 @@ export default class Header extends React.Component {
     render() {
         return (
             <div>
-                <link href="https://fonts.googleapis.com/css?family=Quicksand:700" rel="stylesheet"/>
-                <Navbar transparent fixed="top" color="transparent" dark expand="md" scrolling style={{paddingLeft: 50, fontFamily: "Quicksand", backgroundColor: "#ea804a"}}>
+                <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet"/>
+                <Navbar transparent fixed="top" color="transparent" dark expand="md" scrolling style={{paddingLeft: 50, fontFamily: 'Slabo 27px'}}>
                     <NavbarBrand>
-                        <Link to="/" style={{color: "#fff"}}>PANOX</Link>                                                 
+                        <Link to="/" style={{color: "#fff"}}>ACME</Link>                                                 
                     </NavbarBrand>
 
                     { !this.state.isWideEnough && <NavbarToggler onClick = { this.onClick } />}
                     <Collapse isOpen = { this.state.collapse } navbar>
                         <NavbarNav right>   
                           <NavItem>
-                              <NavLink to="/Contact_Us" onClick={this.onClick} style={{fontStyle:"bold"}}>Contact us</NavLink>
+                              <NavLink to="#"  style={{color: "#000"}}>Contact us</NavLink>
                           </NavItem>                                                                     
                           <NavItem>
-                              <NavLink to="/About_Us" onClick={this.onClick}>About us</NavLink>
+                              <NavLink to="#" style={{color: "#000"}}>About us</NavLink>
                           </NavItem>
                           <NavItem>
                               <Dropdown isOpen={this.state.dropdownOpen} toggle={this.toggle}>
-                              <DropdownToggle nav caret>Menu</DropdownToggle>
+                              <DropdownToggle nav caret style={{color: "#000"}}>Menu</DropdownToggle>
                               <DropdownMenu>                                  
-                                  <DropdownItem><Link to="/Careers" onClick={this.onClick}>Careers</Link></DropdownItem>                                  
-                                  <DropdownItem><Link to="/FAQ" onClick={this.onClick}>FAQ</Link></DropdownItem>
+                                  <DropdownItem><Link to="#"  style={{color: "#000"}}>Careers</Link></DropdownItem>                                  
+                                  <DropdownItem><Link to="#"  style={{color: "#000"}}>FAQ</Link></DropdownItem>
                               </DropdownMenu>
                               </Dropdown>
                           </NavItem>
@@ -64,5 +65,16 @@ export default class Header extends React.Component {
                 </Navbar>
             </div>
         );
+    }
+
+
+}
+
+const styles = {
+    homeNav: {
+        color: "black"
+    },
+    Nav: {                  
+        color: "#fff"
     }
 }
