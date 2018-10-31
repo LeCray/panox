@@ -1,13 +1,6 @@
 import React, { Component} from 'react';
 import { Input,Fa, Card, CardBody, ModalFooter,ModalBody, ModalHeader, Modal, Table, TableHead } from 'mdbreact';
-
-
-//import Ionicon from 'react-ionicons'
-//import { Link, DirectLink, Element, Events, animateScroll as scroll, scrollSpy, scroller } from 'react-scroll'
-//import scrollToComponent from 'react-scroll-to-component';
-    
 import { Link } from 'react-router-dom'
-
 import {
     FormGroup,
     FormControl,
@@ -37,21 +30,28 @@ export default class SavingsAccount extends Component {
             width: window.innerWidth,
             mobile: false,  
             accounts: [],
+
             withdrawModal: false,
             withdrawID: 1,
             maxWithdrawal: 0,
             withdrawAmount:"",
-            withdrawLimit: false
+            withdrawLimit: false,
+
+            depositModal: false,
+            depositID: 1,            
+            depositAmount:"",
+
         };
-        this.toggle = this.toggle.bind(this);
+        this.withdrawToggle = this.withdrawToggle.bind(this);
+        this.depositToggle = this.depositToggle.bind(this);
         this.handleWithdraw = this.handleWithdraw.bind(this);
+        this.handleDeposit = this.handleDeposit.bind(this);
         this.processWithdraw = this.processWithdraw.bind(this);
+        this.processDeposit = this.processDeposit.bind(this);
         
     }
 
-    componentWillMount() {
-        window.scrollTo(0, 0)
-
+    componentWillMount() {        
         const Accounts = [{
                 id: 1,
                 balance: 20000,                
@@ -62,12 +62,11 @@ export default class SavingsAccount extends Component {
                 id: 3,
                 balance: 10000,
         }];
-        this.setState({accounts: Accounts})
-        
+        this.setState({accounts: Accounts})        
     }
 
     componentDidMount() {
-        console.log(this.state.accounts)
+        
     }
 
     async withdraw(id){
@@ -78,7 +77,7 @@ export default class SavingsAccount extends Component {
         this.setState({maxWithdrawal: maxWithdrawal})    
     }
     handleWithdraw(e) {
-        this.setState({ withdrawAmount: e.target.value});                
+        this.setState({ withdrawAmount: e.target.value});
     }
     processWithdraw() {
         const withdrawAmount = this.state.withdrawAmount
@@ -88,26 +87,43 @@ export default class SavingsAccount extends Component {
         if (accounts[id].balance - withdrawAmount < 1000) {
             this.setState({withdrawLimit: true})
         } else {
-            accounts[id].balance = accounts[id].balance - withdrawAmount            
-            this.setState({withdrawModal: !this.state.withdrawModal})
-            this.state.withdrawLimit?this.setState({withdrawLimit: false}):null
+            if (window.confirm("Are you sure?")) {
+                accounts[id].balance = accounts[id].balance - withdrawAmount            
+                this.setState({withdrawModal: !this.state.withdrawModal})
+                this.state.withdrawLimit?this.setState({withdrawLimit: false}):null
+            }            
         }
-
     }
+    
+    async deposit(id){
+        await this.setState({depositID: id})
+        this.setState({depositModal: true})
+        console.log("Row ID is: ", id)                
+    }
+    handleDeposit(e){
+        this.setState({ depositAmount: e.target.value});        
+    }
+    processDeposit() {
+        const depositAmount = this.state.depositAmount
+        const accounts = this.state.accounts
+        const id = this.state.depositID - 1 
 
-    deposit(id){
+        if (window.confirm("Are you sure?")) {
+            accounts[id].balance = accounts[id].balance + +depositAmount            
+            this.setState({depositModal: !this.state.depositModal})            
+        }            
         
-        console.log({id})
     }
 
-    toggle(){
+    withdrawToggle(){
         this.setState({withdrawModal: !this.state.withdrawModal});
         this.state.withdrawLimit?this.setState({withdrawLimit: false}):null
     }
+    depositToggle(){
+        this.setState({depositModal: !this.state.depositModal});        
+    }
 
-	render() {		
-        
-
+	render() {		    
         const savingsTable = this.state.accounts.map((row) =>
             <tr >                 
                 <td key={row.id}>{row.id}</td>
@@ -117,10 +133,7 @@ export default class SavingsAccount extends Component {
                     <p className="action deposit" onClick={() => this.deposit(row.id)}>Deposit</p>
                 </td>
             </tr>  
-        );
-
-        //const withdrawID = this.state.withdrawID.id
-
+        );        
 
         return(
             <div>      
@@ -134,10 +147,9 @@ export default class SavingsAccount extends Component {
                         </tr>                                                            
                         {savingsTable}  
                     </Table>
-                    
-
-                    <Modal isOpen={this.state.withdrawModal} toggle={this.toggle} size="lg" style={{paddingLeft: 50, paddingRight: 50}}>
-                        <ModalHeader toggle={this.toggle}>
+                    {/*WITHDRAWAL MODAL*/}
+                    <Modal isOpen={this.state.withdrawModal} toggle={this.withdrawToggle} size="lg" style={{paddingLeft: 50, paddingRight: 50}}>
+                        <ModalHeader toggle={this.withdrawToggle}>
                             Withdraw<br/>
                             <p style={{fontSize: 15, marginBottom: -5}}>
                                 You need to have a min of R1000 in this account<br/>
@@ -187,8 +199,53 @@ export default class SavingsAccount extends Component {
 
                         </ModalBody>
                         <ModalFooter>
-                            <Button bsStyle="info" onClick={this.toggle}>Cancel</Button>
+                            <Button bsStyle="info" onClick={this.withdrawToggle}>Cancel</Button>
                             <Button bsStyle="danger" onClick={this.processWithdraw}>Process Withdraw</Button>
+                        </ModalFooter>
+                    </Modal>
+                    {/*DEPOSIT MODAL*/}
+                    <Modal isOpen={this.state.depositModal} toggle={this.depositToggle} size="lg" style={{paddingLeft: 50, paddingRight: 50}}>
+                        <ModalHeader toggle={this.depositToggle}>
+                            Deposit<br/>
+                            <p style={{fontSize: 15, marginBottom: -5}}>
+                                You need to have a min of R1000 in this account<br/>
+                                Savings Account ID: {this.state.withdrawID}
+                            </p>
+                        </ModalHeader>
+                        <ModalBody className="modal-body">
+
+                            <Row>
+                                <Col className="balance-container" lg={4}>
+                                    <h6 className="balance-details">Current Balance:</h6>                                    
+                                </Col>
+                                <Col className="balance-container-2" lg={6}>
+                                    <h6 className="balance-details-2">R {this.state.accounts[this.state.depositID - 1].balance}</h6>                                    
+                                </Col>
+                            </Row>
+                            <Row>
+                                <Col lg={4}>
+                                    <p>Amount to deposit R:</p>
+                                </Col>
+                                <Col lg={4}>
+                                    <Form>
+                                        <FormGroup>
+                                            <FormControl
+                                                autocomplete="off"
+                                                class="input-style"
+                                                type="number"
+                                                name="withdrawAmount"                                        
+                                                placeholder='Enter amount'
+                                                onChange={this.handleDeposit}                                            
+                                            />                                
+                                        </FormGroup>                                
+                                    </Form>
+                                </Col>
+                            </Row>                      
+
+                        </ModalBody>
+                        <ModalFooter>
+                            <Button bsStyle="info" onClick={this.depositToggle}>Cancel</Button>
+                            <Button bsStyle="danger" onClick={this.processDeposit}>Process Deposit</Button>
                         </ModalFooter>
                     </Modal>
             </div>
