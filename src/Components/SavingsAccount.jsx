@@ -19,7 +19,8 @@ import {
   Button
 } from 'react-bootstrap';
 
-
+import {SavingsTransactionsHistory} from './SavingsTransactionsHistory'
+//import {pushTransations} from './SavingsTransactionsHistory'
 
 
 
@@ -32,16 +33,18 @@ export default class SavingsAccount extends Component {
             accounts: [],
 
             withdrawModal: false,
-            withdrawID: 1,
-            maxWithdrawal: 0,
+            withdrawID: "",
+            maxWithdrawal: "",
             withdrawAmount:"",
             withdrawLimit: false,
 
             depositModal: false,
-            depositID: 1,            
+            depositID: "",                      
             depositAmount:"",
-
         };
+
+        
+
         this.withdrawToggle = this.withdrawToggle.bind(this);
         this.depositToggle = this.depositToggle.bind(this);
         this.handleWithdraw = this.handleWithdraw.bind(this);
@@ -62,11 +65,8 @@ export default class SavingsAccount extends Component {
                 id: 3,
                 balance: 10000,
         }];
-        this.setState({accounts: Accounts})        
-    }
+        this.setState({accounts: Accounts})  
 
-    componentDidMount() {
-        
     }
 
     async withdraw(id){
@@ -79,7 +79,7 @@ export default class SavingsAccount extends Component {
     handleWithdraw(e) {
         this.setState({ withdrawAmount: e.target.value});
     }
-    processWithdraw() {
+    processWithdraw(){
         const withdrawAmount = this.state.withdrawAmount
         const accounts = this.state.accounts
         const id = this.state.withdrawID - 1 
@@ -90,15 +90,21 @@ export default class SavingsAccount extends Component {
             if (window.confirm("Are you sure?")) {
                 accounts[id].balance = accounts[id].balance - withdrawAmount            
                 this.setState({withdrawModal: !this.state.withdrawModal})
-                this.state.withdrawLimit?this.setState({withdrawLimit: false}):null
+                this.state.withdrawLimit?this.setState({withdrawLimit: false}):null            
+
+                this.setState({
+                    id: id,
+                    balance: accounts[id].balance,
+                    withdrawAmount: withdrawAmount
+                })
+                //console.log("id:",id,"balance:",accounts[id].balance,"withdrawAmount:",withdrawAmount)                
             }            
         }
     }
     
     async deposit(id){
         await this.setState({depositID: id})
-        this.setState({depositModal: true})
-        console.log("Row ID is: ", id)                
+        this.setState({depositModal: true})                     
     }
     handleDeposit(e){
         this.setState({ depositAmount: e.target.value});        
@@ -107,12 +113,10 @@ export default class SavingsAccount extends Component {
         const depositAmount = this.state.depositAmount
         const accounts = this.state.accounts
         const id = this.state.depositID - 1 
-
         if (window.confirm("Are you sure?")) {
             accounts[id].balance = accounts[id].balance + +depositAmount            
             this.setState({depositModal: !this.state.depositModal})            
-        }            
-        
+        }                    
     }
 
     withdrawToggle(){
@@ -134,9 +138,11 @@ export default class SavingsAccount extends Component {
                 </td>
             </tr>  
         );        
+        
 
         return(
-            <div>      
+            <div>     
+
                 <h3 className="savings-header">Savings Accounts</h3>     
                  
                    <Table striped >
@@ -147,6 +153,12 @@ export default class SavingsAccount extends Component {
                         </tr>                                                            
                         {savingsTable}  
                     </Table>
+
+                    <SavingsTransactionsHistory 
+                        id={this.state.withdrawID?this.state.withdrawID:null} 
+                        balance={this.state.balance?this.state.balance:null} 
+                        withdrawAmount={this.state.withdrawAmount?this.state.withdrawAmount:null}/>
+
                     {/*WITHDRAWAL MODAL*/}
                     <Modal isOpen={this.state.withdrawModal} toggle={this.withdrawToggle} size="lg" style={{paddingLeft: 50, paddingRight: 50}}>
                         <ModalHeader toggle={this.withdrawToggle}>
@@ -164,7 +176,7 @@ export default class SavingsAccount extends Component {
                                     <h6 className="balance-details">Max Withdrawal: </h6>
                                 </Col>
                                 <Col className="balance-container-2" lg={6}>
-                                    <h6 className="balance-details-2">R {this.state.accounts[this.state.withdrawID - 1].balance}</h6>
+                                    <h6 className="balance-details-2">R {this.state.withdrawID?this.state.accounts[this.state.withdrawID - 1].balance:null}</h6>
                                     <h6 className="balance-details-2">R {this.state.maxWithdrawal}</h6>
                                 </Col>
                             </Row>
@@ -219,7 +231,7 @@ export default class SavingsAccount extends Component {
                                     <h6 className="balance-details">Current Balance:</h6>                                    
                                 </Col>
                                 <Col className="balance-container-2" lg={6}>
-                                    <h6 className="balance-details-2">R {this.state.accounts[this.state.depositID - 1].balance}</h6>                                    
+                                    <h6 className="balance-details-2">R {this.state.depositID?this.state.accounts[this.state.depositID - 1].balance:null}</h6>                                    
                                 </Col>
                             </Row>
                             <Row>
@@ -248,6 +260,8 @@ export default class SavingsAccount extends Component {
                             <Button bsStyle="danger" onClick={this.processDeposit}>Process Deposit</Button>
                         </ModalFooter>
                     </Modal>
+
+
             </div>
 		)
 	}

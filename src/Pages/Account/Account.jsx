@@ -8,7 +8,7 @@ import { Input,Fa, Card, CardBody, ModalFooter,ModalBody, ModalHeader, Modal } f
     
 import { Link } from 'react-router-dom'
 import SavingsAccount from '../../Components/SavingsAccount'
-
+//import {SavingsTransactionsHistory} from '../../Components/SavingsTransactionsHistory'
 import {
     FormGroup,
     FormControl,
@@ -49,14 +49,8 @@ export default class Account extends Component {
         this.state = {            
             width: window.innerWidth,
             mobile: false,            
-            showHpDetail: false,    
-            showAppleDetail: false,
-            showAcerDetail: false, 
         };
 
-        this.toggleHpDetail = this.toggleHpDetail.bind(this);
-        this.toggleAppleDetail = this.toggleAppleDetail.bind(this);
-        this.toggleAcerDetail = this.toggleAcerDetail.bind(this);
     }
     
     async toggleHpDetail() {
@@ -80,21 +74,25 @@ export default class Account extends Component {
             <div>              
                 <link href="https://fonts.googleapis.com/css?family=Slabo+27px" rel="stylesheet"/>
                 <div className="account-container" style={{fontFamily: 'Slabo 27px'}}> 
-                    <Row>  
-                        <Col md={3} className="left-navigation"> 
+                    <div>  
+                        <div className="left-navigation"> 
                             <h3>Trevor Noah</h3>
                             <hr className="account-line"/>
                             <p style={{cursor: "pointer"}}>Savings Accounts</p>
                             <p style={{cursor: "pointer"}}>Current Accounts</p>
-                        </Col>
-                        <Col md={1}/>
-                        <Col md={7} className="right-container"> 
-                            <Row className="account-table-container">
-                                <SavingsAccount />
-                            </Row>
-                        </Col>       
+                        </div>
+                        
+                        <div className="right-container"> 
+                            <div className="right-inner-container">
+                                <div className="account-table-container">
+
+                                    <SavingsAccount />
+                                    
+                                </div>
+                            </div>
+                        </div>       
                              
-                    </Row>
+                    </div>
                     
                 </div>
               
